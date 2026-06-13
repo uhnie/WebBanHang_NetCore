@@ -1,0 +1,255 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CafeManagement</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/CafeManagement.styles.css" asp-append-version="true" />
+
+    <style>
+        :root {
+            --primary-color: #2F4F4F; /* Dark Slate Gray */
+            --background-color: #F8F9FA;
+            --text-color: #212529;
+            --accent-color: #D4A373; /* Nâu cà phê */
+            --hover-color: #3E6464;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        /* Navbar */
+        .navbar-custom {
+            background-color: var(--primary-color) !important;
+        }
+
+            .navbar-custom .navbar-brand,
+            .navbar-custom .nav-link {
+                color: white !important;
+                transition: 0.3s;
+            }
+
+                .navbar-custom .nav-link:hover,
+                .navbar-custom .navbar-brand:hover {
+                    color: var(--accent-color) !important;
+                }
+
+        /* Nút Đăng ký */
+        .btn-register {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            transition: 0.3s;
+        }
+
+            .btn-register:hover {
+                background-color: #c08c5d;
+                color: white;
+            }
+
+        /* Nút Đăng nhập */
+        .btn-login {
+            color: white !important;
+            border: 1px solid white;
+            border-radius: 5px;
+            padding: 6px 12px;
+            transition: 0.3s;
+        }
+
+            .btn-login:hover {
+                background-color: var(--hover-color);
+                color: white !important;
+            }
+
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            margin-top: 30px;
+        }
+
+        .footer-content {
+            padding: 35px 30px;
+            background-color: var(--primary-color);
+        }
+
+        .footer-logo {
+            width: 80px;
+            height: auto;
+        }
+
+        footer h5 {
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        footer p {
+            color: #e9ecef;
+            margin-bottom: 0;
+        }
+
+        footer a {
+            color: var(--accent-color) !important;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+            footer a:hover {
+                color: white !important;
+            }
+
+        footer hr {
+            border-color: rgba(255,255,255,0.2);
+        }
+
+
+
+        .main-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+        }
+    </style>
+  
+</head>
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-custom border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand"
+                   asp-area=""
+                   asp-controller="Home"
+                   asp-action="Index">
+                    CafeManagement
+                </a>
+
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target=".navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               asp-controller="Home"
+                               asp-action="Index">
+                                Home
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               asp-controller="Home"
+                               asp-action="Privacy">
+                                Privacy
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               asp-controller="Home"
+                               asp-action="Menu">
+                                Menu
+                            </a>
+                        </li>
+                    </ul>
+
+                  
+                        <ul class="navbar-nav align-items-center">
+                            <li class="nav-item">
+                                <a class="btn-login me-2"
+                                   asp-controller="Account"
+                                   asp-action="Login">
+                                    Đăng nhập
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="btn btn-register"
+                                   asp-controller="Account"
+                                   asp-action="Register">
+                                    Đăng ký
+                                </a>
+                            </li>
+                        </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container main-container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer">
+        <div class="container-fluid footer-content">
+            <div class="row">
+
+                <div class="col-md-3 text-center mb-3">
+                    <img src="~/Anh/anh_foottor.jpg"
+                         alt="Coffee Bean"
+                         class="footer-logo" />
+
+                    <h5 class="mt-2">CafeManagement</h5>
+                    <p>Hệ thống quản lý quán cà phê chuyên nghiệp</p>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <h5>Địa chỉ</h5>
+                    <p>
+                        55 lâm Văn Thạnh<br />
+                        Quy Nhơn,Bình Định
+                    </p>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <h5>Liên hệ</h5>
+                    <p>
+                        📞 0123 777 777<br />
+                        ✉ xuanthu@gmail.com
+                    </p>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <h5>Chính sách</h5>
+
+                    <a asp-controller="Home" asp-action="Privacy">
+                        Chính sách bảo mật
+                    </a>
+
+                    <br />
+
+                    <a asp-controller="Home" asp-action="Privacy">
+                        Điều khoản sử dụng
+                    </a>
+                </div>
+
+            </div>
+
+            <hr />
+
+            <div class="text-center">
+                © 2026 CafeManagement - All Rights Reserved
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
