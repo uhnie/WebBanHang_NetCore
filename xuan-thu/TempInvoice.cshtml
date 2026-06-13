@@ -1,0 +1,432 @@
+﻿
+ @model List<CafeManagement.Models.CartItem>  
+
+
+@* @{ *@
+@*     Layout = null; *@
+
+@*     var total = Model.Sum(x => x.Price * x.Quantity); *@
+@*     var totalAmount = (int)total; *@
+
+@*     // VietQR config *@
+@*     var bankId = "970436"; // Vietcombank *@
+@*     var accountNo = "1026916812"; *@
+@*     var accountName = "NGO THI XUAN THU"; *@
+@*     var addInfo = "Thanh toan hoa don cafe"; *@
+
+@*     var qrUrl = *@
+@*         $"https://img.vietqr.io/image/{bankId}-{accountNo}-compact.png" + *@
+@*         $"?amount={totalAmount}&addInfo={Uri.EscapeDataString(addInfo)}&accountName={Uri.EscapeDataString(accountName)}"; *@
+@* } *@
+
+@* <style> *@
+@*     body { *@
+@*         font-family: Arial; *@
+@*         font-size: 13px; *@
+@*         background: white; *@
+@*     } *@
+
+@*     .bill { *@
+@*         width: 300px; *@
+@*         margin: auto; *@
+@*         padding: 10px; *@
+@*     } *@
+
+@*     .center { *@
+@*         text-align: center; *@
+@*     } *@
+
+@*     .bold { *@
+@*         font-weight: bold; *@
+@*     } *@
+
+@*     .title { *@
+@*         font-size: 16px; *@
+@*         font-weight: bold; *@
+@*         text-transform: uppercase; *@
+@*     } *@
+
+@*     .sub { *@
+@*         font-size: 12px; *@
+@*     } *@
+
+@*     .line { *@
+@*         border-top: 1px dashed #000; *@
+@*         margin: 8px 0; *@
+@*     } *@
+
+@*     table { *@
+@*         width: 100%; *@
+@*         border-collapse: collapse; *@
+@*     } *@
+
+@*     th, td { *@
+@*         font-size: 12px; *@
+@*         padding: 3px 0; *@
+@*     } *@
+
+@*     th { *@
+@*         border-bottom: 1px dashed #000; *@
+@*         text-align: left; *@
+@*     } *@
+
+@*     .right { *@
+@*         text-align: right; *@
+@*     } *@
+
+@*     .total { *@
+@*         font-size: 14px; *@
+@*         font-weight: bold; *@
+@*         text-align: right; *@
+@*         margin-top: 8px; *@
+@*     } *@
+
+@*     .footer { *@
+@*         text-align: center; *@
+@*         margin-top: 10px; *@
+@*         font-size: 12px; *@
+@*     } *@
+
+@*     .stamp { *@
+@*         margin-top: 8px; *@
+@*         display: inline-block; *@
+@*         border: 2px solid green; *@
+@*         color: green; *@
+@*         padding: 4px 8px; *@
+@*         font-weight: bold; *@
+@*         transform: rotate(-8deg); *@
+@*     } *@
+
+@*     .info { *@
+@*         font-size: 12px; *@
+@*         text-align: left; *@
+@*         margin-top: 5px; *@
+@*     } *@
+
+@*     button { *@
+@*         width: 100%; *@
+@*         margin-top: 10px; *@
+@*         padding: 8px; *@
+@*     } *@
+@* </style> *@
+
+@* <div class="bill"> *@
+
+@*     <!-- HEADER --> *@
+@*     <div class="center"> *@
+@*         <div class="title">CÔNG TY CAFE NGỌC AN</div> *@
+@*         <div class="sub">291/12 Trần Cao Vân - TP. Đà Nẵng</div> *@
+@*         <div class="sub">ĐT: 09xx.xxx.xxx</div> *@
+@*     </div> *@
+
+@*     <div class="line"></div> *@
+
+@*     <!-- TITLE --> *@
+@*     <div class="center bold" style="font-size:14px;"> *@
+@*         PHIẾU TÍNH TIỀN *@
+@*     </div> *@
+
+@*     <div class="info"> *@
+@*         Bàn: Bàn 2 - Khách lẻ <br /> *@
+@*         Số phiếu: <br /> *@
+@*         Ngày: @DateTime.Now.ToString("dd/MM/yyyy HH:mm") <br /> *@
+@*         Thu ngân: admin *@
+@*     </div> *@
+
+@*     <div class="line"></div> *@
+
+@*     <!-- TABLE --> *@
+@*     <table> *@
+@*         <thead> *@
+@*             <tr> *@
+@*                 <th>TT</th> *@
+@*                 <th>Tên hàng</th> *@
+@*                 <th>SL</th> *@
+@*                 <th class="right">TT</th> *@
+@*             </tr> *@
+@*         </thead> *@
+
+@*         <tbody> *@
+@*             @{ *@
+@*                 int i = 1; *@
+@*             } *@
+
+@*             @foreach (var item in Model) *@
+@*             { *@
+@*                 <tr> *@
+@*                     <td>@i</td> *@
+@*                     <td>@item.ProductName</td> *@
+@*                     <td>@item.Quantity</td> *@
+@*                     <td class="right"> *@
+@*                         @((item.Price * item.Quantity).ToString("N0")) *@
+@*                     </td> *@
+@*                 </tr> *@
+@*                 i++; *@
+@*             } *@
+@*         </tbody> *@
+@*     </table> *@
+
+@*     <div class="line"></div> *@
+
+@*     <!-- TOTAL --> *@
+@*     <div class="total"> *@
+@*         TỔNG CỘNG: @total.ToString("N0") VND *@
+@*     </div> *@
+
+@*     <!-- QR PAYMENT --> *@
+@*     <div class="line"></div> *@
+
+@*     <div class="center"> *@
+@*         <div class="bold">QUÉT QR ĐỂ THANH TOÁN</div> *@
+
+@*         <img src="@qrUrl" style="width:200px; margin-top:5px;" /> *@
+
+@*         <div class="sub"> *@
+@*             Vietcombank - 1026916812 <br /> *@
+@*             NGO THI XUAN THU *@
+@*         </div> *@
+@*     </div> *@
+
+@*     <div class="line"></div> *@
+
+@*     <!-- THANK YOU --> *@
+@*     <div class="center"> *@
+@*         <div class="stamp">CẢM ƠN QUÝ KHÁCH</div> *@
+@*     </div> *@
+
+@*     <!-- PRINT BUTTON --> *@
+@*     <button onclick="window.print()">In hóa đơn</button> *@
+
+@* </div> *@
+
+
+@{
+    Layout = null;
+
+    var total = Model.Sum(x => x.Price * x.Quantity);
+    var totalAmount = (int)total;
+
+    // VietQR config
+    var bankId = "970436"; // Vietcombank
+    var accountNo = "1026916812";
+    var accountName = "NGO THI XUAN THU";
+    var addInfo = "Thanh toan hoa don cafe";
+
+    var qrUrl =
+        $"https://img.vietqr.io/image/{bankId}-{accountNo}-compact.png" +
+        $"?amount={totalAmount}&addInfo={Uri.EscapeDataString(addInfo)}&accountName={Uri.EscapeDataString(accountName)}";
+}
+
+<style>
+    .footer {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 13px;
+        line-height: 1.8;
+    }
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial;
+        font-size: 12px;
+        color: #000;
+    }
+
+    .bill {
+        width: 270px; /* 58mm chuẩn */
+        margin: auto;
+        padding: 5px;
+    }
+
+    .center { text-align: center; }
+    .bold { font-weight: bold; }
+
+    .title {
+        font-size: 14px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .sub { font-size: 11px; }
+
+    .line {
+        border-top: 1px dashed #000;
+        margin: 6px 0;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 11px;
+    }
+
+    th, td {
+        padding: 2px 0;
+    }
+
+    th {
+        border-bottom: 1px dashed #000;
+        text-align: left;
+    }
+
+    .right { text-align: right; }
+
+    .total {
+        font-size: 13px;
+        font-weight: bold;
+        text-align: right;
+        margin-top: 6px;
+    }
+
+    .info {
+        font-size: 11px;
+        margin-top: 5px;
+    }
+
+    .stamp {
+        margin-top: 8px;
+        display: inline-block;
+        border: 2px solid green;
+        color: green;
+        padding: 3px 6px;
+        font-weight: bold;
+        transform: rotate(-8deg);
+        font-size: 11px;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 10px;
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    img {
+        margin-top: 5px;
+    }
+
+    @@media print {
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        button {
+            display: none;
+        }
+
+        .bill {
+            width: 58mm;
+            margin: 0;
+            padding: 2mm;
+        }
+
+        img {
+            width: 160px !important;
+        }
+    }
+</style>
+
+<div class="bill">
+
+    <!-- HEADER -->
+    <div class="center">
+        <div class="title">MÂY CAFE</div>
+        <div class="sub">55 Lâm Văn Thạnh, Quy Nhơn</div>
+        <div class="sub">ĐT: 0123 456 789</div>
+    </div>
+
+    <div class="line"></div>
+
+    <!-- TITLE -->
+    <div class="center bold">
+        PHIẾU TÍNH TIỀN
+    </div>
+
+    <div class="info">
+        Bàn: Bàn 2 - Khách lẻ <br />
+        Số phiếu: #0001 <br />
+        Ngày: @DateTime.Now.ToString("dd/MM/yyyy HH:mm") <br />
+        Thu ngân: admin
+    </div>
+
+    <div class="line"></div>
+
+    <!-- ITEMS -->
+    <table>
+        <thead>
+            <tr>
+                <th>TT</th>
+                <th>Món</th>
+                <th>SL</th>
+                <th class="right">Tiền</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @{
+                int i = 1;
+            }
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@item.ProductName</td>
+                    <td>@item.Quantity</td>
+                    <td class="right">
+                        @((item.Price * item.Quantity).ToString("N0"))
+                    </td>
+                </tr>
+                i++;
+            }
+        </tbody>
+    </table>
+
+    <div class="line"></div>
+
+    <!-- TOTAL -->
+    <div class="total">
+        TỔNG: @total.ToString("N0") VND
+    </div>
+
+    <div class="line"></div>
+
+    <!-- QR PAYMENT -->
+    <div class="center">
+        <div class="bold">QUÉT QR THANH TOÁN</div>
+
+        <img src="@qrUrl" style="width:160px;" />
+
+        <div class="sub">
+            Vietcombank: 1026916812 <br />
+            NGO THI XUAN THU
+        </div>
+    </div>
+
+    <div class="line"></div>
+
+    <!-- THANK YOU -->
+    <div class="footer">
+
+        <div class="thankyou">
+            ☕ Xin chân thành cảm ơn quý khách!
+        </div>
+
+        <div>
+            Hẹn gặp lại quý khách .
+        </div>
+
+       
+
+        <br />
+
+        
+
+    </div>
+
+    <!-- PRINT -->
+    <button onclick="window.print()">IN HÓA ĐƠN</button>
+
+</div>

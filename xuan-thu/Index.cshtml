@@ -1,242 +1,243 @@
 ﻿@* @{ *@
-@*     ViewData["Title"] = "Home Page"; *@
-@*     Layout = "_Layout1"; *@
+@*     ViewData["Title"] = "Pos"; *@
+@*     Layout = "_Layout2"; *@
+@* } *@
+@* @using CafeManagement.Models *@
+
+@* @{ *@
+@*     var tables = ViewBag.Tables as List<CafeTable>; *@
+@*     var products = ViewBag.Products as List<Product>; *@
+@*     var cart = ViewBag.Cart as List<CartItem>; *@
 @* } *@
 
+@* <div class="container-fluid"> *@
 
-@* <div class="position-relative"> *@
-@*     <img src="~/Anh/thiet-ke-nha-hang-chay-2030.jpg" *@
-@*          class="w-100" *@
-@*          style="height: calc(100vh - 70px); object-fit: cover;" *@
-@*          alt="Cafe" /> *@
+@*     @if (TempData["Success"] != null) *@
+@*     { *@
+@*         <div class="alert alert-success"> *@
+@*             @TempData["Success"] *@
+@*         </div> *@
+@*     } *@
 
-@*     <div class="position-absolute top-50 start-50 translate-middle text-center text-white"> *@
-@*         <h1 class="display-1 fw-bold">CAFE MANAGEMENT</h1> *@
-@*         <p class="fs-3">Hệ thống quản lý quán cà phê chuyên nghiệp</p> *@
-
-@*         <a asp-controller="Account" *@
-@*            asp-action="Login" *@
-@*            class="btn btn-lg btn-warning"> *@
-@*             Bắt đầu ngay *@
+@*     <div class="row"> *@
+@*         <a asp-controller="Reservation" *@
+@*            asp-action="Index" *@
+@*            class="btn btn-primary"> *@
+@*             Đặt bàn *@
 @*         </a> *@
-@*     </div> *@
-@* </div> *@
-@* <div class="container"> *@
+@*         <!-- DANH SÁCH BÀN --> *@
+@*         <div class="col-md-3"> *@
 
-@*     <div class="section"> *@
-@*         <h2>Giới Thiệu</h2> *@
+@*             <h3 class="mb-3">Danh sách bàn</h3> *@
 
-@*         <p> *@
-@*             Chào mừng bạn đến với <strong>Hệ Thống Quản Lý Quán Cà Phê</strong> – *@
-@*             giải pháp hỗ trợ quản lý và vận hành quán cà phê một cách hiệu quả, *@
-@*             hiện đại và chuyên nghiệp. *@
-@*         </p> *@
+@*             @foreach (var table in tables) *@
+@*             { *@
+@*                 string btnClass = "btn-success"; *@
 
-@*         <p> *@
-@*             Được phát triển nhằm đáp ứng nhu cầu quản lý ngày càng cao trong lĩnh vực *@
-@*             kinh doanh đồ uống, hệ thống giúp chủ quán dễ dàng kiểm soát mọi hoạt động *@
-@*             từ bán hàng, quản lý thực đơn, hóa đơn, nhân viên đến theo dõi doanh thu *@
-@*             và thống kê hoạt động kinh doanh. *@
-@*         </p> *@
-@*     </div> *@
+@*                 if (table.Status == "Đã đặt") *@
+@*                 { *@
+@*                     btnClass = "btn-warning"; *@
+@*                 } *@
+@*                 else if (table.Status == "Đang sử dụng") *@
+@*                 { *@
+@*                     btnClass = "btn-danger"; *@
+@*                 } *@
 
-@*     <div class="section"> *@
-@*         <h2>Sứ Mệnh</h2> *@
+@*                 <a asp-action="Index" *@
+@*                    asp-route-tableId="@table.Id" *@
+@*                    class="btn @btnClass w-100 mb-2"> *@
 
-@*         <div class="card"> *@
-@*             <p> *@
-@*                 Chúng tôi mong muốn mang đến một nền tảng quản lý đơn giản, *@
-@*                 trực quan và dễ sử dụng, giúp các quán cà phê tối ưu quy trình *@
-@*                 vận hành, tiết kiệm thời gian và nâng cao chất lượng phục vụ khách hàng. *@
-@*             </p> *@
-@*         </div> *@
-@*     </div> *@
+@*                     @table.TableName *@
 
-@*     <div class="section"> *@
-@*         <h2>Chức Năng Nổi Bật</h2> *@
+@*                     <br /> *@
 
-@*         <div class="grid"> *@
-@*             <div class="feature-card">☕ Quản lý thực đơn đồ uống</div> *@
-@*             <div class="feature-card">🪑 Quản lý bàn và khu vực phục vụ</div> *@
-@*             <div class="feature-card">🧾 Quản lý hóa đơn bán hàng</div> *@
-@*             <div class="feature-card">👥 Quản lý khách hàng</div> *@
-@*             <div class="feature-card">👨‍💼 Quản lý nhân viên</div> *@
-@*             <div class="feature-card">📊 Theo dõi doanh thu và lợi nhuận</div> *@
-@*             <div class="feature-card">📈 Báo cáo và thống kê trực quan</div> *@
-@*         </div> *@
-@*     </div> *@
+@*                     <small>@table.Status</small> *@
 
-@*     <div class="section"> *@
-@*         <h2>Lợi Ích Mang Lại</h2> *@
-
-@*         <div class="grid"> *@
-@*             <div class="feature-card">⚡ Tự động hóa quy trình quản lý</div> *@
-@*             <div class="feature-card">✔ Giảm thiểu sai sót khi vận hành</div> *@
-@*             <div class="feature-card">💰 Tiết kiệm thời gian và chi phí</div> *@
-@*             <div class="feature-card">🚀 Nâng cao hiệu quả kinh doanh</div> *@
-@*             <div class="feature-card">📌 Hỗ trợ ra quyết định từ dữ liệu thực tế</div> *@
-@*         </div> *@
-@*     </div> *@
-
-@*     <div class="section"> *@
-@*         <h2>Tầm Nhìn</h2> *@
-
-@*         <div class="card"> *@
-@*             <p> *@
-@*                 Hướng tới việc xây dựng một hệ thống quản lý thông minh, *@
-@*                 đáp ứng nhu cầu của các quán cà phê từ quy mô nhỏ đến lớn, *@
-@*                 góp phần thúc đẩy quá trình chuyển đổi số trong lĩnh vực *@
-@*                 kinh doanh dịch vụ đồ uống. *@
-@*             </p> *@
-@*         </div> *@
-@*     </div> *@
-
-@*     <div class="section"> *@
-@*         <h2>Thông Tin Liên Hệ</h2> *@
-
-@*         <div class="contact-grid"> *@
-
-@*             <div class="contact-card"> *@
-@*                 <h3>Email</h3> *@
-@*                 <p>support@cafemanagement.com</p> *@
-@*             </div> *@
-
-@*             <div class="contact-card"> *@
-@*                 <h3>Hotline</h3> *@
-@*                 <p>0123 456 789</p> *@
-@*             </div> *@
-
-@*             <div class="contact-card"> *@
-@*                 <h3>Địa Chỉ</h3> *@
-@*                 <p>[Địa chỉ của bạn]</p> *@
-@*             </div> *@
-
-@*         </div> *@
-@*     </div> *@
-
-@* </div> *@
-
-@* </section> *@
-
-@* <style> *@
-@*     :root { *@
-@*         --primary-color: #2F4F4F; *@
-@*         --background-color: #F8F9FA; *@
-@*         --text-color: #212529; *@
-@*         --accent-color: #D4A373; *@
-@*         --hover-color: #3E6464; *@
-@*     } *@
-
-@*     .about-page { *@
-@*         background: var(--background-color); *@
-@*         color: var(--text-color); *@
-@*         font-family: "Segoe UI", sans-serif; *@
-@*     } *@
-
-     
-
-@*     .container { *@
-@*         width: 100%; *@
-@*         padding: 70px 8%; *@
-@*     } *@
-
-@*     .section { *@
-@*         margin-bottom: 60px; *@
-@*     } *@
-
-@*         .section h2 { *@
-@*             text-align: center; *@
-@*             color: var(--primary-color); *@
-@*             margin-bottom: 30px; *@
-@*             font-size: 34px; *@
-@*             position: relative; *@
-@*         } *@
-
-@*             .section h2::after { *@
-@*                 content: ""; *@
-@*                 width: 80px; *@
-@*                 height: 4px; *@
-@*                 background: var(--accent-color); *@
-@*                 display: block; *@
-@*                 margin: 12px auto 0; *@
-@*                 border-radius: 50px; *@
+@*                 </a> *@
 @*             } *@
 
-@*     .card { *@
-@*         background: white; *@
-@*         padding: 35px; *@
-@*         border-radius: 15px; *@
-@*         border-left: 5px solid var(--accent-color); *@
-@*         box-shadow: 0 8px 25px rgba(0,0,0,.05); *@
-@*     } *@
+@*         </div> *@
 
-@*     .grid { *@
-@*         display: grid; *@
-@*         grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); *@
-@*         gap: 20px; *@
-@*     } *@
+@*         <!-- MENU --> *@
+@*         <div class="col-md-5"> *@
 
-@*     .feature-card { *@
-@*         background: white; *@
-@*         padding: 25px; *@
-@*         border-radius: 15px; *@
-@*         text-align: center; *@
-@*         font-weight: 600; *@
-@*         border-top: 4px solid var(--accent-color); *@
-@*         box-shadow: 0 8px 20px rgba(0,0,0,.05); *@
-@*         transition: .3s; *@
-@*     } *@
+@*             <h3 class="mb-3">Menu</h3> *@
 
-@*         .feature-card:hover { *@
-@*             transform: translateY(-5px); *@
-@*         } *@
+@*             <div class="row"> *@
 
-@*     .contact-grid { *@
-@*         display: grid; *@
-@*         grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); *@
-@*         gap: 20px; *@
-@*     } *@
+@*                 @foreach (var item in products) *@
+@*                 { *@
+@*                     <div class="col-md-6"> *@
 
-@*     .contact-card { *@
-@*         background: white; *@
-@*         padding: 25px; *@
-@*         border-radius: 15px; *@
-@*         text-align: center; *@
-@*         border-left: 4px solid var(--accent-color); *@
-@*         box-shadow: 0 8px 20px rgba(0,0,0,.05); *@
-@*     } *@
+@*                         <div class="card mb-3 shadow-sm"> *@
 
-@*         .contact-card h3 { *@
-@*             color: var(--primary-color); *@
-@*             margin-bottom: 10px; *@
-@*         } *@
+@*                             <div class="card-body"> *@
 
+@*                                 <h5> *@
+@*                                     @item.ProductName *@
+@*                                 </h5> *@
 
-@*     { *@
-@*         padding: 80px 20px; *@
-@*     } *@
+@*                                 <p class="text-danger fw-bold"> *@
+@*                                     @item.Price.ToString("N0") VNĐ *@
+@*                                 </p> *@
 
-@*     .hero h1 { *@
-@*         font-size: 34px; *@
-@*     } *@
+@*                                 @if (ViewBag.SelectedTable != null) *@
+@*                                 { *@
+@*                                     <form asp-action="AddToCart" *@
+@*                                           method="post"> *@
 
- 
+@*                                         <input type="hidden" *@
+@*                                                name="tableId" *@
+@*                                                value="@ViewBag.SelectedTable" /> *@
 
-@*     .container { *@
-@*         padding: 50px 20px; *@
-@*     } *@
+@*                                         <input type="hidden" *@
+@*                                                name="productId" *@
+@*                                                value="@item.Id" /> *@
 
-@*     .section h2 { *@
-@*         font-size: 28px; *@
-@*     } *@
+@*                                         <button class="btn btn-success w-100"> *@
+@*                                             Thêm món *@
+@*                                         </button> *@
 
-@*     } *@
-@* </style> *@
+@*                                     </form> *@
+@*                                 } *@
 
+@*                             </div> *@
+
+@*                         </div> *@
+
+@*                     </div> *@
+@*                 } *@
+
+@*             </div> *@
+
+@*         </div> *@
+
+@*         <!-- GIỎ HÀNG --> *@
+@*         <div class="col-md-4"> *@
+
+@*             <h3 class="mb-3"> *@
+@*                 Bàn: @ViewBag.SelectedTable *@
+@*             </h3> *@
+
+@*             @if (cart != null && cart.Any()) *@
+@*             { *@
+@*                 <table class="table table-bordered"> *@
+
+@*                     <thead> *@
+@*                         <tr> *@
+@*                             <th>Món</th> *@
+@*                             <th>SL</th> *@
+@*                             <th>Tiền</th> *@
+@*                             <th></th> *@
+@*                         </tr> *@
+@*                     </thead> *@
+
+@*                     <tbody> *@
+
+@*                         @foreach (var item in cart) *@
+@*                         { *@
+@*                             <tr> *@
+
+@*                                 <td> *@
+@*                                     @item.ProductName *@
+@*                                 </td> *@
+
+@*                                 <td> *@
+@*                                     @item.Quantity *@
+@*                                 </td> *@
+
+@*                                 <td> *@
+@*                                     @((item.Price * item.Quantity) *@
+@*                                         .ToString("N0")) *@
+@*                                 </td> *@
+
+@*                                 <td> *@
+
+@*                                     <form asp-action="RemoveItem" *@
+@*                                           method="post"> *@
+
+@*                                         <input type="hidden" *@
+@*                                                name="tableId" *@
+@*                                                value="@ViewBag.SelectedTable" /> *@
+
+@*                                         <input type="hidden" *@
+@*                                                name="productId" *@
+@*                                                value="@item.ProductId" /> *@
+
+@*                                         <button class="btn btn-sm btn-danger"> *@
+@*                                             X *@
+@*                                         </button> *@
+
+@*                                     </form> *@
+
+@*                                 </td> *@
+
+@*                             </tr> *@
+@*                         } *@
+
+@*                     </tbody> *@
+
+@*                 </table> *@
+
+@*                 <div class="alert alert-info"> *@
+
+@*                     <h4> *@
+@*                         Tổng tiền: @(cart.Sum(x => x.Price * x.Quantity).ToString("N0")) VNĐ *@
+@*                     </h4> *@
+
+@*                 </div> *@
+
+@*                 <form asp-action="TempInvoice" *@
+@*                       method="get"> *@
+
+@*                     <input type="hidden" *@
+@*                            name="tableId" *@
+@*                            value="@ViewBag.SelectedTable" /> *@
+
+@*                     <button class="btn btn-warning w-100 mb-2"> *@
+@*                         In tạm tính *@
+@*                     </button> *@
+
+@*                 </form> *@
+
+@*                 <form asp-action="Checkout" *@
+@*                       method="post" *@
+@*                       onsubmit="return confirm('Xác nhận thanh toán?');"> *@
+
+@*                     <input type="hidden" *@
+@*                            name="tableId" *@
+@*                            value="@ViewBag.SelectedTable" /> *@
+
+                    
+@*                     <button type="submit" *@
+@*                             class="btn btn-danger" *@
+@*                             onclick="return confirm('Xác nhận thanh toán hóa đơn này?');"> *@
+@*                         Thanh toán *@
+@*                     </button> *@
+@*                 </form> *@
+@*             } *@
+@*             else *@
+@*             { *@
+@*                 <div class="alert alert-secondary"> *@
+@*                     Chưa có món nào được chọn *@
+@*                 </div> *@
+@*             } *@
+
+@*         </div> *@
+
+@*     </div> *@
+
+@* </div> *@
+@{
+    ViewData["Title"] = "Pos";
+    Layout = "_Layout2";
+}
+@using CafeManagement.Models
 
 @{
-    ViewData["Title"] = "Home Page";
-    Layout = "_Layout1";
+    var tables = ViewBag.Tables as List<CafeTable>;
+    var products = ViewBag.Products as List<Product>;
+    var cart = ViewBag.Cart as List<CartItem>;
 }
 
 <style>
@@ -249,345 +250,345 @@
     }
 
     body {
-        background-color: var(--background-color);
-        color: var(--text-color);
+        background: var(--background-color);
     }
 
-    .section {
-        padding: 80px 0;
+    .coffee-header {
+        background: linear-gradient(135deg, var(--primary-color), var(--hover-color));
+        color: white;
+        padding: 18px 24px;
+        border-radius: 16px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,.12);
+    }
+
+    .section-card {
+        background: white;
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,.08);
+        height: 100%;
     }
 
     .section-title {
         color: var(--primary-color);
         font-weight: 700;
-        text-align: center;
-        margin-bottom: 15px;
-    }
-
-        .section-title::after {
-            content: "";
-            display: block;
-            width: 80px;
-            height: 4px;
-            background: var(--accent-color);
-            margin: 12px auto 0;
-            border-radius: 50px;
-        }
-
-    .custom-card {
-        border: none;
         border-left: 5px solid var(--accent-color);
-        border-radius: 15px;
-        box-shadow: 0 8px 20px rgba(0,0,0,.05);
+        padding-left: 12px;
+        margin-bottom: 20px;
     }
 
-    .feature-card {
-        border: none;
-        border-top: 4px solid var(--accent-color);
-        border-radius: 15px;
-        box-shadow: 0 8px 20px rgba(0,0,0,.05);
-        transition: all .3s ease;
-    }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-
-    .contact-card {
-        border: none;
-        border-left: 4px solid var(--accent-color);
-        border-radius: 15px;
-        box-shadow: 0 8px 20px rgba(0,0,0,.05);
-        transition: all .3s ease;
-    }
-
-        .contact-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .contact-card h5 {
-            color: var(--primary-color);
-            font-weight: 700;
-        }
-
-    .hero-overlay {
-        background: rgba(47,79,79,.55);
-    }
-
-    .hero-btn {
-        background-color: var(--accent-color);
-        border: none;
-        color: white;
+    .table-btn {
+        border-radius: 12px;
+        padding: 12px;
+        transition: .25s;
         font-weight: 600;
-        padding: 12px 30px;
     }
 
-        .hero-btn:hover {
-            background-color: var(--hover-color);
-            color: white;
+        .table-btn:hover {
+            transform: translateY(-2px);
         }
+
+    .btn-primary {
+        background: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+
+        .btn-primary:hover {
+            background: var(--hover-color);
+            border-color: var(--hover-color);
+        }
+
+    .btn-success {
+        background: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+
+        .btn-success:hover {
+            background: var(--hover-color);
+            border-color: var(--hover-color);
+        }
+
+    .btn-warning {
+        background: var(--accent-color);
+        border-color: var(--accent-color);
+        color: white;
+    }
+
+        .btn-warning:hover {
+            color: white;
+            opacity: .9;
+        }
+
+    .product-card {
+        border: none;
+        border-radius: 16px;
+        overflow: hidden;
+        transition: .25s;
+        box-shadow: 0 3px 10px rgba(0,0,0,.08);
+    }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,.15);
+        }
+
+    .product-name {
+        color: var(--primary-color);
+        font-weight: 700;
+    }
+
+    .product-price {
+        color: var(--accent-color);
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .table thead {
+        background: var(--primary-color);
+        color: white;
+    }
+
+    .cart-total {
+        background: rgba(212,163,115,.15);
+        border: 1px solid var(--accent-color);
+        border-radius: 12px;
+        padding: 15px;
+    }
+
+        .cart-total h4 {
+            margin: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+    .empty-cart {
+        border-radius: 12px;
+    }
 </style>
 
-<!-- HERO -->
-<div class="position-relative">
+<div class="container-fluid py-3">
 
-    <img src="~/Anh/thiet-ke-nha-hang-chay-2030.jpg"
-         class="w-100"
-         style="height: calc(100vh - 70px); object-fit: cover;"
-         alt="Cafe" />
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success shadow-sm">
+            @TempData["Success"]
+        </div>
+    }
 
-    <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100"></div>
+    <div class="coffee-header d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">☕ Quản lý bán hàng Cafe</h2>
 
-    <div class="position-absolute top-50 start-50 translate-middle text-center text-white">
-
-        <h1 class="display-1 fw-bold">CAFE MANAGEMENT</h1>
-
-        <p class="fs-3">
-            Hệ thống quản lý quán cà phê chuyên nghiệp
-        </p>
-
-        <a asp-controller="Account"
-           asp-action="Login"
-           class="btn btn-lg hero-btn mt-3">
-            Bắt đầu ngay
+        <a asp-controller="Reservation"
+           asp-action="Index"
+           class="btn btn-warning">
+            Đặt bàn
         </a>
+    </div>
+
+    <div class="row g-4">
+
+        <!-- DANH SÁCH BÀN -->
+        <div class="col-lg-3">
+            <div class="section-card">
+
+                <h4 class="section-title">
+                    Danh sách bàn
+                </h4>
+
+                @foreach (var table in tables)
+                {
+                    string btnClass = "btn-success";
+
+                    if (table.Status == "Đang sử dụng")
+                    {
+                        btnClass = "btn-danger";
+                    }
+
+                    <a asp-action="Index"
+                       asp-route-tableId="@table.Id"
+                       class="btn @btnClass table-btn w-100 mb-3">
+
+                        @table.TableName
+                        <br />
+                        <small>
+                            @(table.Status == "Đang sử dụng"
+                                ? "Đang sử dụng"
+                                : "Trống")
+                        </small>
+
+                    </a>
+                }
+
+            </div>
+        </div>
+
+        <!-- MENU -->
+        <div class="col-lg-5">
+            <div class="section-card">
+
+                <h4 class="section-title">
+                    Menu
+                </h4>
+
+                <div class="row">
+
+                    @foreach (var item in products)
+                    {
+                        <div class="col-md-6">
+
+                            <div class="card product-card mb-3">
+
+                                <div class="card-body">
+
+                                    <h5 class="product-name">
+                                        @item.ProductName
+                                    </h5>
+
+                                    <p class="product-price">
+                                        @item.Price.ToString("N0") VNĐ
+                                    </p>
+
+                                    @if (ViewBag.SelectedTable != null)
+                                    {
+                                        <form asp-action="AddToCart"
+                                              method="post">
+
+                                            <input type="hidden"
+                                                   name="tableId"
+                                                   value="@ViewBag.SelectedTable" />
+
+                                            <input type="hidden"
+                                                   name="productId"
+                                                   value="@item.Id" />
+
+                                            <button class="btn btn-success w-100">
+                                                Thêm món
+                                            </button>
+
+                                        </form>
+                                    }
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- GIỎ HÀNG -->
+        <div class="col-lg-4">
+            <div class="section-card">
+
+                <h4 class="section-title">
+                    Bàn: @ViewBag.SelectedTable
+                </h4>
+
+                @if (cart != null && cart.Any())
+                {
+                    <table class="table table-bordered align-middle">
+
+                        <thead>
+                            <tr>
+                                <th>Món</th>
+                                <th>SL</th>
+                                <th>Tiền</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var item in cart)
+                            {
+                                <tr>
+
+                                    <td>@item.ProductName</td>
+
+                                    <td>@item.Quantity</td>
+
+                                    <td>
+                                        @((item.Price * item.Quantity).ToString("N0"))
+                                    </td>
+
+                                    <td>
+
+                                        <form asp-action="RemoveItem"
+                                              method="post">
+
+                                            <input type="hidden"
+                                                   name="tableId"
+                                                   value="@ViewBag.SelectedTable" />
+
+                                            <input type="hidden"
+                                                   name="productId"
+                                                   value="@item.ProductId" />
+
+                                            <button class="btn btn-sm btn-danger">
+                                                X
+                                            </button>
+
+                                        </form>
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                    <div class="cart-total mb-3">
+                        <h4>
+                            Tổng tiền:
+                            @(cart.Sum(x => x.Price * x.Quantity).ToString("N0")) VNĐ
+                        </h4>
+                    </div>
+
+                    <form asp-action="TempInvoice"
+                          method="get">
+
+                        <input type="hidden"
+                               name="tableId"
+                               value="@ViewBag.SelectedTable" />
+
+                        <button class="btn btn-warning w-100 mb-2">
+                            🖨 In tạm tính
+                        </button>
+
+                    </form>
+
+                    <form asp-action="Checkout"
+                          method="post"
+                          onsubmit="return confirm('Xác nhận thanh toán?');">
+
+                        <input type="hidden"
+                               name="tableId"
+                               value="@ViewBag.SelectedTable" />
+
+                        <button type="submit"
+                                class="btn btn-danger w-100 py-3 fw-bold shadow">
+                            💰 Thanh toán
+                        </button>
+
+                    </form>
+                }
+                else
+                {
+                    <div class="alert alert-secondary empty-cart">
+                        Chưa có món nào được chọn
+                    </div>
+                }
+
+            </div>
+        </div>
 
     </div>
 
 </div>
-<div class="mt-3">
-    <a href="/Reservation/CustomerCreate" class="btn btn-success">
-        Khách đặt bàn
-    </a>
-</div>
-<!-- GIỚI THIỆU -->
-<section class="section">
-    <div class="container">
-
-        <h2 class="section-title">Giới Thiệu</h2>
-
-        <div class="card custom-card">
-            <div class="card-body p-4">
-
-                <p>
-                    Chào mừng bạn đến với <strong>Hệ Thống Quản Lý Quán Cà Phê</strong> –
-                    giải pháp hỗ trợ quản lý và vận hành quán cà phê một cách hiệu quả,
-                    hiện đại và chuyên nghiệp.
-                </p>
-
-                <p>
-                    Được phát triển nhằm đáp ứng nhu cầu quản lý ngày càng cao trong lĩnh vực
-                    kinh doanh đồ uống, hệ thống giúp chủ quán dễ dàng kiểm soát mọi hoạt động
-                    từ bán hàng, quản lý thực đơn, hóa đơn, nhân viên đến theo dõi doanh thu
-                    và thống kê hoạt động kinh doanh.
-                </p>
-
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<!-- SỨ MỆNH -->
-<section class="section bg-white">
-    <div class="container">
-
-        <h2 class="section-title">Sứ Mệnh</h2>
-
-        <div class="card custom-card">
-            <div class="card-body p-4">
-
-                Chúng tôi mong muốn mang đến một nền tảng quản lý đơn giản,
-                trực quan và dễ sử dụng, giúp các quán cà phê tối ưu quy trình
-                vận hành, tiết kiệm thời gian và nâng cao chất lượng phục vụ khách hàng.
-
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<!-- CHỨC NĂNG -->
-<section class="section">
-    <div class="container">
-
-        <h2 class="section-title">Chức Năng Nổi Bật</h2>
-
-        <div class="row g-4">
-
-            <div class="col-md-6 col-lg-4">
-                <div class="card feature-card h-100">
-                    <div class="card-body text-center">
-                        ☕ Quản lý thực đơn đồ uống
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-4">
-                <div class="card feature-card h-100">
-                    <div class="card-body text-center">
-                        🪑 Quản lý bàn và khu vực phục vụ
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-4">
-                <div class="card feature-card h-100">
-                    <div class="card-body text-center">
-                        🧾 Quản lý hóa đơn bán hàng
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-4">
-                <div class="card feature-card h-100">
-                    <div class="card-body text-center">
-                        👥 Quản lý khách hàng
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-4">
-                <div class="card feature-card h-100">
-                    <div class="card-body text-center">
-                        👨‍💼 Quản lý nhân viên
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-4">
-                <div class="card feature-card h-100">
-                    <div class="card-body text-center">
-                        📊 Theo dõi doanh thu và lợi nhuận
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-4">
-                <div class="card feature-card h-100">
-                    <div class="card-body text-center">
-                        📈 Báo cáo và thống kê trực quan
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-</section>
-
-<!-- LỢI ÍCH -->
-<section class="section bg-white">
-    <div class="container">
-
-        <h2 class="section-title">Lợi Ích Mang Lại</h2>
-
-        <div class="row g-4">
-
-            <div class="col-md-6 col-lg-4">
-                <div class="card feature-card h-100">
-                    <div class="card-body text-center">
-                        ⚡ Tự động hóa quy trình quản lý
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-4">
-                <div class="card feature-card h-100">
-                    <div class="card-body text-center">
-                        ✔ Giảm thiểu sai sót khi vận hành
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-4">
-                <div class="card feature-card h-100">
-                    <div class="card-body text-center">
-                        💰 Tiết kiệm thời gian và chi phí
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-6">
-                <div class="card feature-card h-100">
-                    <div class="card-body text-center">
-                        🚀 Nâng cao hiệu quả kinh doanh
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-6">
-                <div class="card feature-card h-100">
-                    <div class="card-body text-center">
-                        📌 Hỗ trợ ra quyết định từ dữ liệu thực tế
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-</section>
-
-<!-- TẦM NHÌN -->
-<section class="section">
-    <div class="container">
-
-        <h2 class="section-title">Tầm Nhìn</h2>
-
-        <div class="card custom-card">
-            <div class="card-body p-4">
-
-                Hướng tới việc xây dựng một hệ thống quản lý thông minh,
-                đáp ứng nhu cầu của các quán cà phê từ quy mô nhỏ đến lớn,
-                góp phần thúc đẩy quá trình chuyển đổi số trong lĩnh vực
-                kinh doanh dịch vụ đồ uống.
-
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<!-- LIÊN HỆ -->
-<section class="section bg-white">
-    <div class="container">
-
-        <h2 class="section-title">Thông Tin Liên Hệ</h2>
-
-        <div class="row g-4">
-
-            <div class="col-md-4">
-                <div class="card contact-card h-100">
-                    <div class="card-body text-center">
-                        <h5>Email</h5>
-                        <p class="mb-0">support@cafemanagement.com</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card contact-card h-100">
-                    <div class="card-body text-center">
-                        <h5>Hotline</h5>
-                        <p class="mb-0">0123 456 789</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card contact-card h-100">
-                    <div class="card-body text-center">
-                        <h5>Địa Chỉ</h5>
-                        <p class="mb-0">[Địa chỉ của bạn]</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-</section>
-<h3>Bản đồ</h3>
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.3669398692227!2d109.21485480000003!3d13.756731699999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x316f6ce90acf6ba9%3A0x4bc794658d0f069f!2zNTUgTMOibSBWxINuIFRo4bqhbmgsIFF1eSBOaMahbiBOYW0sIEdpYSBMYWksIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1781369816702!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-
