@@ -1,0 +1,250 @@
+﻿
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_Layout2";
+}
+
+@model List<CafeManagement.Models.Reservation>
+
+<style>
+    :root {
+        --primary-color: #2F4F4F;
+        --background-color: #F8F9FA;
+        --text-color: #212529;
+        --accent-color: #D4A373;
+        --hover-color: #3E6464;
+    }
+
+    body {
+        background-color: var(--background-color);
+    }
+
+    .page-header {
+        background: linear-gradient( 135deg, var(--primary-color), var(--hover-color) );
+        color: white;
+        padding: 20px 25px;
+        border-radius: 18px;
+        margin-bottom: 25px;
+        box-shadow: 0 5px 20px rgba(0,0,0,.12);
+    }
+
+        .page-header h2 {
+            margin: 0;
+            font-weight: 700;
+        }
+
+    .reservation-card {
+        background: white;
+        border-radius: 18px;
+        padding: 25px;
+        box-shadow: 0 5px 20px rgba(0,0,0,.08);
+    }
+
+    .btn-add {
+        background: var(--accent-color);
+        border-color: var(--accent-color);
+        color: white;
+        font-weight: 600;
+        border-radius: 10px;
+        padding: 10px 18px;
+    }
+
+        .btn-add:hover {
+            color: white;
+            opacity: .9;
+        }
+
+    .table {
+        margin-bottom: 0;
+    }
+
+        .table thead {
+            background: var(--primary-color);
+            color: white;
+            vertical-align: middle;
+        }
+
+            .table thead th {
+                border: none;
+                padding: 15px;
+            }
+
+        .table tbody td {
+            padding: 15px;
+            vertical-align: middle;
+        }
+
+    .table-hover tbody tr:hover {
+        background-color: rgba(212,163,115,.08);
+    }
+
+    .badge {
+        padding: 8px 12px;
+        font-size: .85rem;
+        border-radius: 30px;
+    }
+
+    .badge-booked {
+        background: #ffc107;
+        color: #212529;
+    }
+
+    .badge-using {
+        background: var(--primary-color);
+        color: white;
+    }
+
+    .badge-done {
+        background: #198754;
+        color: white;
+    }
+
+    .badge-cancel {
+        background: #dc3545;
+        color: white;
+    }
+
+    .table-title {
+        color: var(--primary-color);
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .reservation-count {
+        background: rgba(212,163,115,.15);
+        color: var(--primary-color);
+        border-radius: 12px;
+        padding: 12px 18px;
+        font-weight: 600;
+    }
+</style>
+
+<div class="container py-4">
+
+    <div class="page-header d-flex justify-content-between align-items-center">
+
+        <div>
+            <h2>📅 Danh sách đặt bàn</h2>
+            <small>Quản lý thông tin đặt bàn khách hàng</small>
+        </div>
+
+        <a asp-action="Create"
+           class="btn btn-add">
+            ➕ Thêm đặt bàn
+        </a>
+
+    </div>
+
+    <div class="reservation-card">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <h4 class="table-title mb-0">
+                Danh sách đặt bàn
+            </h4>
+
+            <div class="reservation-count">
+                Tổng: @Model.Count đặt bàn
+            </div>
+
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead>
+                    <tr>
+                        <th>Khách hàng</th>
+                        <th>SĐT</th>
+                        <th>Bàn</th>
+                        <th>Thời gian đặt</th>
+                        <th>Trạng thái</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                <strong>@item.CustomerName</strong>
+                            </td>
+
+                            <td>
+                                @item.Phone
+                            </td>
+
+                            <td>
+                                @item.Table?.TableName
+                            </td>
+
+                            <td>
+                                @item.ReservationTime.ToString("dd/MM/yyyy HH:mm")
+                            </td>
+
+                            <td>
+                                @if (item.Status == "Pending")
+                                {
+                                    <span class="badge bg-warning">
+                                        Chờ xác nhận
+                                    </span>
+                                }
+                                else if (item.Status == "Confirmed")
+                                {
+                                    <span class="badge bg-primary">
+                                        Đã xác nhận
+                                    </span>
+                                }
+                                else if (item.Status == "Completed")
+                                {
+                                    <span class="badge bg-success">
+                                        Hoàn thành
+                                    </span>
+                                }
+                                
+                                
+                                else
+                                {
+                                    <span class="badge bg-secondary">
+                                        @item.Status
+                                    </span>
+                                }
+
+                            </td>
+                            <td>
+
+                                @if (item.Status == "Confirmed")
+                                {
+                                    <form asp-action="Complete"
+                                          method="post">
+
+                                        <input type="hidden"
+                                               name="id"
+                                               value="@item.Id" />
+
+                                        <button type="submit"
+                                                class="btn btn-success">
+                                            Hoàn thành
+                                        </button>
+
+                                    </form>
+                                }
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,43 @@
+﻿@model CafeManagement.Models.Reservation
+
+<h2>Đặt bàn</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}
+
+<form method="post">
+
+    <div>
+        <label>Tên khách</label>
+        <input asp-for="CustomerName" class="form-control" />
+    </div>
+
+    <div>
+        <label>Số điện thoại</label>
+        <input asp-for="Phone" class="form-control" />
+    </div>
+
+    <div>
+        <label>Chọn bàn</label>
+        <select asp-for="TableId" class="form-control">
+            @foreach (var t in ViewBag.Tables)
+            {
+                <option value="@t.Id">@t.TableName</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <label>Thời gian</label>
+        <input asp-for="ReservationTime" type="datetime-local" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">
+        Đặt bàn
+    </button>
+
+</form>

@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_Layout2";
+}
+@model List<CafeManagement.Models.Reservation>
+
+<h2>Danh sách chờ xác nhận</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Khách</th>
+            <th>SĐT</th>
+            <th>Bàn</th>
+            <th>Thời gian</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.CustomerName</td>
+                <td>@item.Phone</td>
+                <td>@item.Table.TableName</td>
+                <td>@item.ReservationTime</td>
+
+                <td>
+
+                    <form asp-action="Confirm" method="post">
+                        <input type="hidden" name="id" value="@item.Id" />
+
+                        <button class="btn btn-success">
+                            Xác nhận
+                        </button>
+                    </form>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
