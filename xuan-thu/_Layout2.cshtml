@@ -117,7 +117,7 @@
             padding: 20px;
         }
     </style>
-  
+
 </head>
 <body>
 
@@ -142,47 +142,52 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link"
-                               asp-controller="Home"
+                               asp-controller="Reservation"
                                asp-action="Index">
-                                Home
+                                Danh sách đặt bàn
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               asp-controller="Reservation"
+                               asp-action="Create">
+                                Đặt bàn
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link"
-                               asp-controller="Home"
-                               asp-action="Privacy">
-                                Privacy
+                               asp-controller="Staff"  
+                               asp-action="Index">
+                                quản lí bàn
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link"
-                               asp-controller="Home"
-                               asp-action="Menu">
-                                Menu
+                               asp-controller="Pos"
+                               asp-action="Index">
+                                pos
                             </a>
                         </li>
-                        
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               asp-controller="Statistics"
+                               asp-action="Index">
+                                📊 Thống kê
+                            </a>
+                        </li>
                     </ul>
 
-                  
-                        <ul class="navbar-nav align-items-center">
-                            <li class="nav-item">
-                                <a class="btn-login me-2"
-                                   asp-controller="Account"
-                                   asp-action="Login">
-                                    Đăng nhập
-                                </a>
-                            </li>
 
-                            <li class="nav-item">
-                                <a class="btn btn-register"
-                                   asp-controller="Account"
-                                   asp-action="Register">
-                                    Đăng ký
-                                </a>
-                            </li>
-                        </ul>
+                    <ul class="navbar-nav align-items-center">
+                        <li class="nav-item">
+                            <a class="btn-login me-2"
+                               asp-controller="Account"
+                               asp-action="Logout">
+                                Đăng xuất
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -222,7 +227,6 @@
                         ✉ xuanthu@gmail.com
                     </p>
                 </div>
-               
 
                 <div class="col-md-3 mb-3">
                     <h5>Chính sách</h5>
@@ -237,9 +241,6 @@
                         Điều khoản sử dụng
                     </a>
                 </div>
-                <h3>Bản đồ</h3>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.3669398692227!2d109.21485480000003!3d13.756731699999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x316f6ce90acf6ba9%3A0x4bc794658d0f069f!2zNTUgTMOibSBWxINuIFRo4bqhbmgsIFF1eSBOaMahbiBOYW0sIEdpYSBMYWksIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1781369816702!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-
 
             </div>
 
