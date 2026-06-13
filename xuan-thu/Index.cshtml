@@ -1,17 +1,306 @@
-﻿ 
+﻿@model CafeManagement.ViewModels.StatisticsViewModel
+
 @{
-ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Thống kê";
     Layout = "_Layout2";
 }
-@model List<CafeManagement.Models.CafeTable>
 
-<h2>Quản lý bàn</h2>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<a asp-controller="Reservation"
-   asp-action="Create"
-   class="btn btn-primary mb-3">
-    Đặt bàn
-</a>
-<a href="/Reservation/Pending" class="btn btn-warning">
-    Chờ xác nhận
-</a>
+<style>
+    :root {
+        --primary-color: #2F4F4F;
+        --background-color: #F8F9FA;
+        --text-color: #212529;
+        --accent-color: #D4A373;
+        --hover-color: #3E6464;
+    }
+
+    .dashboard-title {
+        color: var(--primary-color);
+        font-weight: 700;
+    }
+
+    .stat-card {
+        border: none;
+        border-radius: 16px;
+        transition: .3s;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .stat-header {
+        background: var(--primary-color);
+        color: white;
+        padding: 12px;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .stat-value {
+        color: var(--accent-color);
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .chart-card {
+        border: none;
+        border-radius: 16px;
+    }
+</style>
+
+<div class="container-fluid py-4">
+
+    <h2 class="dashboard-title mb-4">
+        📊 Dashboard Cafe Management
+    </h2>
+    <div class="card shadow-sm border-0 mb-4">
+
+        <div class="card-body">
+
+            <form method="get">
+
+                <div class="row">
+
+                    <div class="col-md-4">
+
+                        <label class="form-label">
+                            Từ ngày
+                        </label>
+
+                        <input type="date"
+                               name="fromDate"
+                               class="form-control"
+                               value="@(Model.FromDate?.ToString("yyyy-MM-dd"))" />
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <label class="form-label">
+                            Đến ngày
+                        </label>
+
+                        <input type="date"
+                               name="toDate"
+                               class="form-control"
+                               value="@(Model.ToDate?.ToString("yyyy-MM-dd"))" />
+
+                    </div>
+
+                    <div class="col-md-4 d-flex align-items-end">
+
+                        <button type="submit"
+                                class="btn w-100 text-white"
+                                style="background:#2F4F4F">
+
+                            🔍 Lọc thống kê
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+    <div class="row g-4">
+
+        <div class="col-md-3">
+            <div class="card stat-card shadow-sm">
+                <div class="stat-header">Doanh thu hôm nay</div>
+                <div class="card-body text-center">
+                    <div class="stat-value">
+                        @Model.TodayRevenue.ToString("N0")
+                    </div>
+                    VNĐ
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card stat-card shadow-sm">
+                <div class="stat-header">Doanh thu tháng</div>
+                <div class="card-body text-center">
+                    <div class="stat-value">
+                        @Model.MonthRevenue.ToString("N0")
+                    </div>
+                    VNĐ
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card stat-card shadow-sm">
+                <div class="stat-header">Tổng doanh thu</div>
+                <div class="card-body text-center">
+                    <div class="stat-value">
+                        @Model.TotalRevenue.ToString("N0")
+                    </div>
+                    VNĐ
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card stat-card shadow-sm">
+                <div class="stat-header">Hóa đơn</div>
+                <div class="card-body text-center">
+                    <div class="stat-value">
+                        @Model.InvoiceCount
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row g-4 mt-1">
+
+        <div class="col-md-4">
+            <div class="card stat-card shadow-sm">
+                <div class="stat-header">Sản phẩm</div>
+                <div class="card-body text-center">
+                    <div class="stat-value">
+                        @Model.TotalProducts
+                    </div>
+                    Món
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card stat-card shadow-sm">
+                <div class="stat-header">Bàn</div>
+                <div class="card-body text-center">
+                    <div class="stat-value">
+                        @Model.TotalTables
+                    </div>
+                    Bàn
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card stat-card shadow-sm">
+                <div class="stat-header">Đặt bàn</div>
+                <div class="card-body text-center">
+                    <div class="stat-value">
+                        @Model.TotalReservations
+                    </div>
+                    Lượt đặt
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row mt-4">
+
+        <div class="col-md-4">
+
+            <div class="card chart-card shadow-sm">
+
+                <div class="card-header text-white"
+                     style="background:#2F4F4F">
+                    Thông tin đặt bàn
+                </div>
+
+                <div class="card-body">
+
+                    <p>📅 Hôm nay: <b>@Model.TodayReservations</b></p>
+
+                    <p>✅ Đã đặt: <b>@Model.ConfirmedReservations</b></p>
+
+                    <p>❌ Đã hủy: <b>@Model.CancelledReservations</b></p>
+
+                    <p>
+                        ☕ Bàn dùng nhiều nhất:
+                        <b>@Model.MostUsedTable</b>
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-8">
+
+            <div class="card chart-card shadow-sm">
+
+                <div class="card-header text-white"
+                     style="background:#2F4F4F">
+
+                    Top 5 món bán chạy
+
+                </div>
+
+                <div class="card-body">
+
+                    <canvas id="productChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card chart-card shadow-sm mt-4">
+
+        <div class="card-header text-white"
+             style="background:#2F4F4F">
+
+            Doanh thu 7 ngày gần nhất
+
+        </div>
+
+        <div class="card-body">
+
+            <canvas id="revenueChart"></canvas>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    new Chart(
+    document.getElementById('productChart'),
+    {
+        type:'pie',
+        data:
+        {
+            labels:@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.TopProductNames)),
+            datasets:
+            [{
+                data:@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.TopProductQuantities))
+            }]
+        }
+    });
+
+    new Chart(
+    document.getElementById('revenueChart'),
+    {
+        type:'bar',
+        data:
+        {
+            labels:@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.RevenueDays)),
+            datasets:
+            [{
+                label:'Doanh thu',
+                data:@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.RevenueValues))
+            }]
+        }
+    });
+
+</script>
