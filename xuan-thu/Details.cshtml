@@ -1,0 +1,242 @@
+﻿
+@model Invoice
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    <title>Hóa đơn thanh toán</title>
+
+    <style>
+        {
+    size: 80mm auto;
+    margin: 0;
+}
+        body {
+            font-family: 'Courier New', monospace;
+            width: 220px;
+            margin: 0 auto;
+            padding: 5px;
+            font-size: 11px;
+        }
+
+        .header {
+            text-align: center;
+        }
+
+        .shop-name {
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .shop-info {
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px dashed #000;
+            margin: 10px 0;
+        }
+
+        .invoice-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .info {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+            .info p {
+                margin: 4px 0;
+            }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        th {
+            border-bottom: 1px solid #000;
+            padding-bottom: 5px;
+        }
+
+        td {
+            padding: 5px 0;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .total-box {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .thankyou {
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        @@media print {
+            body {
+                width: auto;
+            }
+        }
+
+    </style>
+    
+
+</head>
+
+<body>
+
+    
+    <div class="header">
+
+        <div class="shop-name">
+            MâY CAFE
+        </div>
+
+        <div class="shop-info">
+            📍  55 Lâm Văn Thạnh , Quy Nhơn <br />
+            ☎ 0123 456 789
+        </div>
+
+    </div>
+
+    <hr />
+
+    <div class="invoice-title">
+        HÓA ĐƠN THANH TOÁN
+    </div>
+
+    <hr />
+
+    <div class="info">
+
+        <p>
+            <b>Mã hóa đơn:</b> HD-@Model.Id
+        </p>
+
+        <p>
+            <b>Bàn:</b> @Model.Table?.TableName
+        </p>
+
+        <p>
+            <b>Ngày:</b>
+            @Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+        </p>
+
+    </div>
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>Món</th>
+                <th class="center">SL</th>
+                <th class="right">Giá</th>
+                <th class="right">TT</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model.Details)
+            {
+                <tr>
+
+                    <td>
+                        @item.Product?.ProductName
+                    </td>
+
+                    <td class="center">
+                        @item.Quantity
+                    </td>
+
+                    <td class="right">
+                        @item.Price.ToString("N0")
+                    </td>
+
+                    <td class="right">
+                        @((item.Price * item.Quantity).ToString("N0"))
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+    <hr />
+
+    <div class="total-box">
+
+        TỔNG TIỀN:
+        @Model.Total.ToString("N0") VNĐ
+
+    </div>
+
+    <hr />
+
+
+    <div class="footer">
+
+        <div class="thankyou">
+            ☕ Xin chân thành cảm ơn quý khách!
+        </div>
+
+        <div>
+            Hẹn gặp lại quý khách trong thời gian sớm nhất.
+        </div>
+
+        <div>
+            Chúc quý khách một ngày tốt lành ❤️
+        </div>
+
+        <br />
+
+        <div>
+            Mây Cafe
+        </div>
+
+    </div>
+
+    <script>
+        window.onload = function () {
+            window.print();
+        };
+    </script>
+    
+
+</body>
+</html>
